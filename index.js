@@ -8,7 +8,7 @@ context.lineWidth = 1;
 let mountainPos = {x: [], y: []};
 for (let i = 0; i < 101; i++) {
 	mountainPos.x[i] = i * window.innerWidth / 100;
-	mountainPos.y[i] = Math.sin((mountainPos.x[i] / window.innerWidth) * Math.PI / 2) * 200 + window.innerHeight - 300;
+	mountainPos.y[i] = Math.sin((mountainPos.x[i] * 5 / window.innerWidth) * Math.PI / 2) * 200 + window.innerHeight - 300;
 	if (i == 0) {
 		context.moveTo(mountainPos.x[i], mountainPos.y[i]);
 	} else {
