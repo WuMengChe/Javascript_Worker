@@ -5,11 +5,18 @@ canvas.height = window.innerHeight;
 
 context.strokeStyle = "rgba(52, 18, 14)";
 context.lineWidth = 1;
-let randomMountain = Math.random() * 10;
+let randomMountain1 = Math.random() * 10;
+let randomMountain2 = Math.random() * 20;
+let randomMountain3 = Math.random() * 30;
+let randomMountain4 = Math.random() * 40;
 let mountainPos = {x: [], y: []};
 for (let i = 0; i < 101; i++) {
 	mountainPos.x[i] = i * window.innerWidth / 100;
-	mountainPos.y[i] = Math.sin((mountainPos.x[i] * randomMountain / window.innerWidth) * Math.PI / 2) * 200 + window.innerHeight - 300;
+	mountainPos.y[i] = Math.sin((mountainPos.x[i] * 0.5 * randomMountain1 / window.innerWidth) * Math.PI / 2) * 200 + 
+		Math.sin((mountainPos.x[i] * 0.5 * randomMountain2 / window.innerWidth) * Math.PI / 2) * 30 + 
+		Math.sin((mountainPos.x[i] * 0.1 *randomMountain3 / window.innerWidth) * Math.PI / 2) * 30 + 
+		Math.sin((mountainPos.x[i] * 0.01 * randomMountain4 / window.innerWidth) * Math.PI / 2) * 50 + 
+		window.innerHeight - 300;
 	if (i == 0) {
 		context.moveTo(mountainPos.x[i], mountainPos.y[i]);
 	} else {
