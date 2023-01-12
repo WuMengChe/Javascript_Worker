@@ -4,7 +4,6 @@ canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
 const createMountain = () => {
-	context.clearRect(0,0,canvas.width,canvas.height);
 	context.beginPath();
 	context.strokeStyle = "rgba(52, 18, 14)";
 	context.lineWidth = 1;
@@ -34,7 +33,11 @@ const createMountain = () => {
 	context.fill();
 };
 
+const clearCanvas = () => {
+	context.clearRect(0,0,canvas.width,canvas.height);
+};
+
 createMountain()
-setInterval(() => {
-	createMountain();
-}, 1000);
+// setInterval(() => {
+	// createMountain();
+// }, 1000);
