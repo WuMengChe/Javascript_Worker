@@ -37,7 +37,18 @@ const clearCanvas = () => {
 	context.clearRect(0,0,canvas.width,canvas.height);
 };
 
-createMountain()
+const createSnow = () => {
+	context.beginPath();
+	context.fillStyle = "rgb(255, 255, 255)";
+	context.shadowBlur = 10;
+	context.shadowColor = "rgb(255, 255, 255)";
+	context.moveTo(500, 500);
+	context.arc(500, 500, 10, 0, Math.PI * 2);
+	context.fill();
+};
+
+createMountain();
+createSnow();
 // setInterval(() => {
 	// createMountain();
 // }, 1000);
