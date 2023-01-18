@@ -10,17 +10,20 @@ let snow = {
 let mountainPos = {x: [], y: []};
 
 const createMountain = () => {
+	const drawLine = (index, obj) => {
+		if (index == 0) {
+			context.moveTo(obj.x[index], obj.y[index]);
+		} else {
+			context.lineTo(obj.x[index], obj.y[index]);
+		}
+	};
 	context.beginPath();
 	context.strokeStyle = "rgba(52, 18, 14)";
 	context.lineWidth = 1;
 	if (mountainPos.x.length > 0) {
 		context.shadowBlur = 0;
 		for (let i = 0; i < mountainPos.x.length; i++) {
-			if (i == 0) {
-				context.moveTo(mountainPos.x[i], mountainPos.y[i]);
-			} else {
-				context.lineTo(mountainPos.x[i], mountainPos.y[i]);
-			}
+			drawLine(i, mountainPos);
 		}
 	} else {
 		let randomMountain1 = Math.random() * 10;
@@ -34,11 +37,7 @@ const createMountain = () => {
 				Math.sin((mountainPos.x[i] * 0.1 *randomMountain3 / window.innerWidth) * Math.PI / 2) * 30 + 
 				Math.sin((mountainPos.x[i] * 0.01 * randomMountain4 / window.innerWidth) * Math.PI / 2) * 50 + 
 				window.innerHeight - 300;
-			if (i == 0) {
-				context.moveTo(mountainPos.x[i], mountainPos.y[i]);
-			} else {
-				context.lineTo(mountainPos.x[i], mountainPos.y[i]);
-			}
+			drawLine(i, mountainPos);
 		}
 	}
 	context.lineTo(window.innerWidth, window.innerHeight);
