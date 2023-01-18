@@ -3,6 +3,11 @@ let context = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+let snow = {
+	x: Math.random() * 40 + 20,
+	y: 0
+};
+
 const createMountain = () => {
 	context.beginPath();
 	context.strokeStyle = "rgba(52, 18, 14)";
@@ -38,17 +43,21 @@ const clearCanvas = () => {
 };
 
 const createSnow = () => {
+	if (snow.y >= canvas.height) {
+		return
+	};
 	context.beginPath();
 	context.fillStyle = "rgb(255, 255, 255)";
 	context.shadowBlur = 10;
 	context.shadowColor = "rgb(255, 255, 255)";
-	context.moveTo(500, 500);
-	context.arc(500, 500, 10, 0, Math.PI * 2);
+	context.moveTo(snow.x, snow.y);
+	context.arc(snow.x, snow.y, 10, 0, Math.PI * 2);
 	context.fill();
+	snow.y += 0.1;
 };
 
 createMountain();
 createSnow();
-// setInterval(() => {
-	// createMountain();
-// }, 1000);
+setInterval(() => {
+	createSnow();
+}, 1);
