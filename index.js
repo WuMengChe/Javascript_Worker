@@ -8,13 +8,36 @@ let snow = {
 	y: 0
 };
 let mountainPos = {x: [], y: []};
+let dx1 = 0;
+let dy1 = 0;
+let preP;
 
 const createMountain = () => {
+	const gradient = (a, b) => {
+		return (b.y-a.y)/(b.x-a.x);
+	};
 	const drawLine = (index, obj) => {
 		if (index == 0) {
+			preP = {x:obj.x[0], y:obj.y[0]};
 			context.moveTo(obj.x[index], obj.y[index]);
 		} else {
-			context.lineTo(obj.x[index], obj.y[index]);
+			let f = 0.3;
+			let t = 1;
+			let m = 0;
+			curP = {x:obj.x[index], y:obj.y[index]};
+			nexP = {x:obj.x[index + 1], y:obj.y[index + 1]};
+			if (nexP) {
+				m = gradient(preP, nexP);
+				dx2 = (nexP.x - curP.x) * -f;
+				dy2 = dx2 * m * t;
+			} else {
+				dx2 = 0;
+				dy2 = 0;
+			}
+			context.bezierCurveTo(preP.x - dx1, preP.y - dy1, curP.x + dx2, curP.y + dy2, curP.x, curP.y);
+			dx1 = dx2;
+			dy1 = dy2;
+			preP = curP;
 		}
 	};
 	context.beginPath();
@@ -26,17 +49,14 @@ const createMountain = () => {
 			drawLine(i, mountainPos);
 		}
 	} else {
+		let landHeight = window.innerHeight - 300;
 		let randomMountain1 = Math.random() * 10;
 		let randomMountain2 = Math.random() * 20;
 		let randomMountain3 = Math.random() * 30;
 		let randomMountain4 = Math.random() * 40;
-		for (let i = 0; i < 101; i++) {
-			mountainPos.x[i] = i * window.innerWidth / 100;
-			mountainPos.y[i] = Math.sin((mountainPos.x[i] * 0.5 * randomMountain1 / window.innerWidth) * Math.PI / 2) * 200 + 
-				Math.sin((mountainPos.x[i] * 0.5 * randomMountain2 / window.innerWidth) * Math.PI / 2) * 30 + 
-				Math.sin((mountainPos.x[i] * 0.1 *randomMountain3 / window.innerWidth) * Math.PI / 2) * 30 + 
-				Math.sin((mountainPos.x[i] * 0.01 * randomMountain4 / window.innerWidth) * Math.PI / 2) * 50 + 
-				window.innerHeight - 300;
+		for (let i = 0; i < 52; i++) {
+			mountainPos.x[i] = i * window.innerWidth / 50;
+			mountainPos.y[i] = perlin.get(mountainPos.x[i], 200) * 100 + landHeight;
 			drawLine(i, mountainPos);
 		}
 	}
