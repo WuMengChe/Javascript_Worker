@@ -3,6 +3,10 @@ let context = canvas.getContext("2d");
 canvas.width = window.innerWidth;
 canvas.height = window.innerHeight;
 
+// 渲染畫面用
+const requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+const cancelAnimationFrame = window.cancelAnimationFrame || window.mozCancelAnimationFrame;
+
 let snow = {
 	x: Math.random() * 40 + 200,
 	y: 0
@@ -11,6 +15,7 @@ let mountainPos = {x: [], y: []};
 let dx1 = 0;
 let dy1 = 0;
 let preP;
+let myReq;
 
 const createMountain = () => {
 	const gradient = (a, b) => {
@@ -73,10 +78,6 @@ const clearCanvas = () => {
 };
 
 const createSnow = () => {
-	if (snow.y >= canvas.height) {
-		clearInterval(startDropSnow);
-		return
-	};
 	context.beginPath();
 	context.fillStyle = "rgb(255, 255, 255)";
 	context.shadowBlur = 10;
@@ -87,10 +88,17 @@ const createSnow = () => {
 	snow.y += 0.1;
 };
 
-createMountain();
-createSnow();
-const startDropSnow = setInterval(() => {
+const render = () => {
+	if (snow.y >= canvas.height) {
+		cancelAnimationFrame(myReq);
+		return
+	};
 	clearCanvas();
 	createSnow();
 	createMountain();
-}, 1);
+	myReq = requestAnimationFrame(render);
+};
+
+createMountain();
+createSnow();
+myReq = requestAnimationFrame(render);
